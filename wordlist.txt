@@ -1,0 +1,37 @@
+# memscan wordlist — one keyword per line
+# Lines starting with '#' are ignored
+# ──────────────────────────────────────
+
+# Account / authentication artifacts
+password
+passwd
+secret
+admin
+login
+token
+apikey
+api_key
+
+# Common file markers
+JFIF
+PNG
+%PDF
+PK
+
+# Network artifacts
+http://
+https://
+ssh-rsa
+BEGIN RSA PRIVATE KEY
+
+# Personal data (GDPR-relevant)
+@gmail.com
+@yahoo.com
+credit_card
+CVV
+
+# Suspicious strings
+bitcoin
+wallet.dat
+ransom
+encrypted
