@@ -18,6 +18,7 @@ typedef struct MatchNode {
     char *context_before;
     char *context_after;
     int context_len;
+    struct MatchNode *prev;
     struct MatchNode *next;
 } MatchNode;
 
@@ -123,7 +124,9 @@ MatchNode *match_push(MatchNode *head, const char *keyword, long offset, const c
     memcpy(node->context_before, context_before, ctx_len);
     memcpy(node->context_after,  context_after,  ctx_len);
 
+    node->prev = NULL;
     node->next = head;
+    if (head) head->prev = node;
     return node;
 }
 
@@ -165,6 +168,36 @@ void match_free(MatchNode *head)
     }
 }
 
+
+void match_print_reverse(const MatchNode *head)
+{
+    const MatchNode *tail = head;
+    while (tail && tail->next)
+        tail = tail->next;
+
+    int count = 1;
+    const MatchNode *current = tail;
+    while (current != NULL) {
+        printf("[MATCH #%d]\n", count);
+        printf("  Keyword : \"%s\"\n", current->keyword);
+        printf("  Offset  : 0x%08lX  (%ld bytes from start)\n", current->offset, current->offset);
+
+        printf("  Context : ");
+        for (int i = 0; i < current->context_len; i++) {
+            char c = current->context_before[i];
+            printf("%c", isprint(c) ? c : '.');
+        }
+        printf("[%s]", current->keyword);
+        for (int i = 0; i < current->context_len; i++) {
+            char c = current->context_after[i];
+            printf("%c", isprint(c) ? c : '.');
+        }
+        printf("...\n\n");
+
+        current = current->prev;
+        count++;
+    }
+}
 
 FILE *open_image(const char *filename)
 {
@@ -250,6 +283,7 @@ int main(int argc, char *argv[])
     int         ctx_len       = CTX_LEN;
 
     int ignore_case = 0;
+    int reverse     = 0;
 
     for (int i = 3; i < argc; i++) {
         if (strcmp(argv[i], "--context") == 0 && i + 1 < argc) {
@@ -257,6 +291,8 @@ int main(int argc, char *argv[])
             i++;
         } else if (strcmp(argv[i], "--ignore-case") == 0) {
             ignore_case = 1;
+        } else if (strcmp(argv[i], "--reverse") == 0) {
+            reverse = 1;
         }
     }
 
@@ -276,7 +312,10 @@ int main(int argc, char *argv[])
     fclose(fp);
 
     printf("\n─────────────────────────────────────────────────────\n\n");
-    match_print_report(matches);
+    if (reverse)
+        match_print_reverse(matches);
+    else
+        match_print_report(matches);
 
     match_free(matches);
     keyword_free(keywords);
