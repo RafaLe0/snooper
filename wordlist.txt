@@ -1,37 +1,1688 @@
 # memscan wordlist — one keyword per line
 # Lines starting with '#' are ignored
 # ──────────────────────────────────────
+# Comprehensive forensic CTF keyword dictionary
+# Categories: credentials, file headers, network, PII, crypto,
+#             malware, system artifacts, CTF flags, encoding, cloud, steganography
+# ──────────────────────────────────────
 
-# Account / authentication artifacts
+
+# ══════════════════════════════════════
+# CTF FLAG FORMATS
+# ══════════════════════════════════════
+
+flag{
+FLAG{
+Flag{
+CTF{
+ctf{
+ESGI{
+esgi{
+picoCTF{
+HTB{
+THM{
+hackthebox{
+tryhackme{
+DUCTF{
+DawgCTF{
+BCACTF{
+HSCTF{
+wctf{
+TJCTF{
+NAHAMCON{
+nahamcon{
+DEADFACE{
+utflag{
+uiuctf{
+lactf{
+sekai{
+corctf{
+justCTF{
+darkCTF{
+Union{
+union{
+inctf{
+INCTF{
+pbctf{
+zer0pts{
+redpwn{
+imaginaryctf{
+b01lers{
+h4ck1ng{
+crypto{
+reverse{
+pwn{
+
+
+# ══════════════════════════════════════
+# AUTHENTICATION & CREDENTIALS
+# ══════════════════════════════════════
+
 password
+Password
+PASSWORD
 passwd
+PASSWD
+pwd
+pass
+Pass
+PASS
+passphrase
+passPhrase
+Passphrase
+credentials
+creds
+credential
 secret
+Secret
+SECRET
+secrets
+masterkey
+master_key
+masterpass
+master_pass
+master_password
 admin
+Admin
+ADMIN
+administrator
+Administrator
+root
+Root
+ROOT
+superuser
+super_user
+guest
+Guest
+user
+User
+username
+Username
 login
+Login
+LOGIN
+auth
+Auth
+AUTH
+authentication
+authorize
+authorized
+account
+Account
+identity
+
+# Token formats
 token
+Token
+TOKEN
+access_token
+auth_token
+bearer_token
+jwt
+JWT
+jwttoken
+refresh_token
+session_token
+api_token
+oauth_token
+id_token
+app_token
+user_token
+client_token
+device_token
+
+# API Keys
 apikey
 api_key
+API_KEY
+APIKEY
+api-key
+access_key
+ACCESS_KEY
+secret_key
+SECRET_KEY
+private_key
+PRIVATE_KEY
+public_key
+client_secret
+CLIENT_SECRET
+client_id
+CLIENT_ID
+app_secret
+APP_SECRET
+app_key
+APP_KEY
+service_key
+server_key
+signing_key
+encryption_key
+decryption_key
+consumer_key
+consumer_secret
+x-api-key
+X-API-Key
+Authorization
 
-# Common file markers
+# Common weak passwords
+hunter2
+hunter
+qwerty
+azerty
+password123
+passwd123
+admin123
+root123
+letmein
+welcome
+iloveyou
+sunshine
+monkey
+dragon
+master
+abc123
+111111
+123456
+12345678
+1234567890
+000000
+654321
+696969
+1q2w3e
+1q2w3e4r
+qazwsx
+qwertyuiop
+superman
+batman
+zxcvbn
+trustno1
+shadow
+michael
+jessica
+princess
+football
+baseball
+mustang
+access
+hello
+cheese
+changeme
+default
+temp
+test
+toor
+alpine
+raspberry
+ubnt
+admin1234
+pass1234
+P@ssw0rd
+P@$$w0rd
+Passw0rd
+p@ssword
+
+# Hash formats (partial patterns)
+$2b$
+$2y$
+$1$
+$apr1$
+$sha1$
+$5$
+$6$
+MD5:
+SHA1:
+SHA256:
+sha256:
+PBKDF2
+
+
+# ══════════════════════════════════════
+# FILE MAGIC BYTES / HEADERS
+# ══════════════════════════════════════
+
+# Images
 JFIF
+Exif
 PNG
-%PDF
-PK
+GIF89a
+GIF87a
+BM6
+RIFF
+WEBP
+II*
+MM*
 
-# Network artifacts
+# Documents
+%PDF
+%!PS-Adobe
+{\\rtf
+PK
+Rar!
+7z
+
+# Executables / Binaries
+MZ
+ELF
+#!
+#!/bin/sh
+#!/bin/bash
+#!/usr/bin/env python
+#!/usr/bin/python3
+
+# Archives
+tar
+.tar
+.gz
+.bz2
+.xz
+.7z
+.zip
+.rar
+.cab
+
+# Office formats
+word/document.xml
+xl/workbook.xml
+ppt/presentation.xml
+[Content_Types].xml
+
+# Databases
+SQLite format 3
+SQLite
+mysql_
+CREATE DATABASE
+CREATE TABLE
+INSERT INTO
+DROP TABLE
+PRAGMA
+
+# Multimedia
+OggS
+ID3
+fLaC
+.mp3
+.mp4
+.wav
+.flac
+.ogg
+.avi
+.mkv
+.mov
+
+# Virtual machine / disk images
+VMDK
+VHDX
+VDI
+qcow2
+OVF
+cylinders
+
+# Filesystem markers
+NTFS
+FAT32
+FAT16
+ext2
+ext3
+ext4
+exFAT
+BOOT
+MBR
+GPT
+EFI PART
+dosfsck
+mkfs
+
+# Certificates / Keys (PEM blocks)
+-----BEGIN RSA PRIVATE KEY-----
+-----BEGIN EC PRIVATE KEY-----
+-----BEGIN DSA PRIVATE KEY-----
+-----BEGIN PRIVATE KEY-----
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+-----BEGIN OPENSSH PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+-----BEGIN CERTIFICATE REQUEST-----
+-----BEGIN PUBLIC KEY-----
+-----BEGIN PGP PRIVATE KEY BLOCK-----
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+-----BEGIN PGP MESSAGE-----
+-----BEGIN PGP SIGNED MESSAGE-----
+-----END RSA PRIVATE KEY-----
+-----END PRIVATE KEY-----
+-----END CERTIFICATE-----
+-----BEGIN DH PARAMETERS-----
+
+
+# ══════════════════════════════════════
+# SSH & REMOTE ACCESS
+# ══════════════════════════════════════
+
+ssh-rsa
+ssh-dss
+ssh-ed25519
+ecdsa-sha2-nistp256
+ecdsa-sha2-nistp384
+ecdsa-sha2-nistp521
+id_rsa
+id_ecdsa
+id_ed25519
+id_dsa
+authorized_keys
+known_hosts
+.ssh/
+openssh-key-v1
+StrictHostKeyChecking
+HostName
+IdentityFile
+ProxyJump
+ForwardAgent
+
+# Remote access tools
+mstsc
+RDP
+VNC
+TeamViewer
+AnyDesk
+Remmina
+NoMachine
+putty
+pageant
+puttygen
+WinSCP
+FileZilla
+cyberduck
+
+
+# ══════════════════════════════════════
+# NETWORK ARTIFACTS
+# ══════════════════════════════════════
+
 http://
 https://
-ssh-rsa
-BEGIN RSA PRIVATE KEY
+ftp://
+sftp://
+ftps://
+ssh://
+telnet://
+ldap://
+ldaps://
+smb://
+rdp://
+vnc://
+irc://
+xmpp://
+ws://
+wss://
 
-# Personal data (GDPR-relevant)
+# HTTP headers
+Host:
+User-Agent:
+Content-Type:
+Content-Length:
+Authorization:
+Cookie:
+Set-Cookie:
+X-Forwarded-For:
+X-Real-IP:
+Referer:
+Origin:
+Accept:
+Accept-Language:
+Transfer-Encoding:
+Connection:
+Upgrade:
+Sec-WebSocket-Key:
+Location:
+WWW-Authenticate:
+X-Auth-Token:
+X-Access-Token:
+X-CSRF-Token:
+
+# Private IP ranges
+192.168.
+10.0.
+172.16.
+172.17.
+172.18.
+127.0.0.1
+localhost
+0.0.0.0
+::1
+
+# Common ports / services
+:22/
+:80/
+:443/
+:3306/
+:5432/
+:27017/
+:6379/
+:8080/
+:8443/
+:3389/
+:21/
+:25/
+:587/
+:993/
+:995/
+:53/
+
+# DNS / domain patterns
+.onion
+.i2p
+.darknet
+tor2web
+torproject
+
+# Network protocols
+SMTP
+POP3
+IMAP
+SNMP
+DNS
+DHCP
+ARP
+ICMP
+Ethernet
+802.11
+
+# Session / cookie names
+PHPSESSID
+JSESSIONID
+ASP.NET_SessionId
+_session
+session_id
+remember_me
+remember_token
+auth_session
+connect.sid
+csrf_token
+XSRF-TOKEN
+_ga
+_gid
+
+
+# ══════════════════════════════════════
+# PERSONALLY IDENTIFIABLE INFORMATION (PII)
+# ══════════════════════════════════════
+
+# Email domains
 @gmail.com
 @yahoo.com
-credit_card
-CVV
+@hotmail.com
+@outlook.com
+@protonmail.com
+@icloud.com
+@live.com
+@aol.com
+@yandex.com
+@mail.ru
+@gmx.com
+@tutanota.com
+@guerrillamail
+@mailinator
+@temp-mail
 
-# Suspicious strings
+# Credit card patterns
+credit_card
+creditcard
+credit-card
+card_number
+cardnumber
+card_num
+cc_number
+ccnumber
+cc_num
+pan_number
+pan
+CVV
+CVC
+CVV2
+CVC2
+expiry
+expiration
+exp_date
+card_expiry
+billing_address
+cardholder
+card_holder
+
+# Banking / finance
+IBAN
+BIC
+SWIFT
+bank_account
+account_number
+routing_number
+sort_code
+PIN
+pin_code
+wire_transfer
+bank_transfer
+paypal
+stripe_secret
+stripe_key
+sk_live_
+pk_live_
+rk_live_
+
+# Identity
+SSN
+social_security
+passport
+passport_number
+license_number
+drivers_license
+national_id
+date_of_birth
+birthdate
+dob
+phone_number
+mobile_number
+address
+postal_code
+zip_code
+tax_id
+TIN
+EIN
+
+# Medical
+patient_id
+medical_record
+diagnosis
+prescription
+health_insurance
+insurance_number
+
+
+# ══════════════════════════════════════
+# CRYPTOCURRENCY
+# ══════════════════════════════════════
+
 bitcoin
+Bitcoin
+BTC
+btc
+ethereum
+Ethereum
+ETH
+eth
+litecoin
+Litecoin
+LTC
+monero
+Monero
+XMR
+xmr
+dogecoin
+ripple
+XRP
+tether
+USDT
+binance
+BNB
+solana
+SOL
+cardano
+ADA
+polkadot
+DOT
+chainlink
+
 wallet.dat
+wallet.json
+keystore
+mnemonic
+seed_phrase
+seed phrase
+recovery_phrase
+private_key_hex
+wallet_private_key
+xprv
+xpub
+ypub
+zpub
+electrum
+metamask
+ledger
+trezor
+blockchain.info
+coinbase
+binance.com
+crypto_wallet
+cold_wallet
+hot_wallet
+paper_wallet
+
+# Bitcoin address prefixes
+1A
+1B
+1C
+3A
+3B
+bc1q
+bc1p
+
+
+# ══════════════════════════════════════
+# MALWARE / THREAT ARTIFACTS
+# ══════════════════════════════════════
+
 ransom
+Ransom
+RANSOM
+ransomware
+Ransomware
+decrypt
+Decrypt
+DECRYPT
+decryption
 encrypted
+Encrypted
+ENCRYPTED
+ATTENTION
+YOUR FILES
+pay now
+pay within
+bitcoin address
+decryptor
+unlock your
+restore your files
+README_DECRYPT
+HOW_TO_DECRYPT
+RECOVER_FILES
+FILES_ENCRYPTED
+RECOVERY_KEY
+!!! IMPORTANT
+!!! ATTENTION
+
+# Malware types
+backdoor
+Backdoor
+trojan
+Trojan
+rootkit
+Rootkit
+keylogger
+Keylogger
+spyware
+Spyware
+adware
+Adware
+botnet
+Botnet
+worm
+Worm
+exploit
+Exploit
+payload
+Payload
+shellcode
+Shellcode
+stager
+Loader
+dropper
+Dropper
+downloader
+Downloader
+injector
+Injector
+cryptominer
+cryptojacking
+stealer
+
+# C2 / Remote access
+C2
+c2_server
+command_and_control
+reverse_shell
+bind_shell
+meterpreter
+Meterpreter
+beacon
+Beacon
+cobalt_strike
+CobaltStrike
+metasploit
+Metasploit
+empire
+Empire
+covenant
+RAT
+remote_access
+remote_shell
+netcat
+nc -e
+nc.exe
+ncat
+socat
+powershell -enc
+powershell -e
+powershell -nop
+powershell.exe
+cmd.exe /c
+cmd /c
+wscript
+cscript
+mshta
+regsvr32
+rundll32
+certutil -decode
+bitsadmin
+wmic process call create
+CreateRemoteThread
+VirtualAllocEx
+WriteProcessMemory
+NtUnmapViewOfSection
+
+# Common malware strings
+HKEY_LOCAL_MACHINE
+HKEY_CURRENT_USER
+Software\Microsoft\Windows\CurrentVersion\Run
+AppData\Roaming
+AppData\Local
+Temp\
+%TEMP%
+%APPDATA%
+%USERPROFILE%
+%SYSTEMROOT%
+WScript.Shell
+CreateObject
+Shell.Application
+ActiveXObject
+eval(
+base64_decode(
+gzinflate(
+str_rot13(
+exec(
+system(
+passthru(
+preg_replace(
+assert(
+
+# Obfuscation markers
+base64
+Base64
+BASE64
+hex_decode
+rot13
+XOR
+xor_key
+obfuscated
+encoded_payload
+encrypted_payload
+UEsDB
+TVqQAA
+
+
+# ══════════════════════════════════════
+# SYSTEM ARTIFACTS — LINUX / UNIX
+# ══════════════════════════════════════
+
+/etc/passwd
+/etc/shadow
+/etc/sudoers
+/etc/hosts
+/etc/resolv.conf
+/etc/crontab
+/etc/cron.d/
+/etc/init.d/
+/etc/systemd/
+/etc/apt/
+/etc/ssh/sshd_config
+/etc/ssh/ssh_config
+/var/log/auth.log
+/var/log/syslog
+/var/log/messages
+/var/log/secure
+/var/www/html/
+/home/
+/root/
+/tmp/
+/proc/self/
+/dev/shm/
+.bash_history
+.zsh_history
+.sh_history
+.bashrc
+.bash_profile
+.profile
+.viminfo
+.wget-hsts
+.gitconfig
+.netrc
+.pgpass
+.mysql_history
+.psql_history
+.sqlite_history
+authorized_keys
+id_rsa
+id_ed25519
+.gnupg/
+.config/
+.local/
+sudoers
+/proc/net/tcp
+/proc/net/udp
+/proc/net/arp
+
+# Shell commands (suspicious)
+wget http
+curl http
+curl -O
+chmod +x
+chmod 777
+chmod 4755
+sudo su
+su root
+nohup
+disown
+&>/dev/null
+2>/dev/null
+>/dev/null
+base64 -d
+base64 --decode
+python -c
+python3 -c
+perl -e
+ruby -e
+nc -lvp
+nc -nv
+iptables -F
+iptables -D
+
+
+# ══════════════════════════════════════
+# SYSTEM ARTIFACTS — WINDOWS
+# ══════════════════════════════════════
+
+NTUSER.DAT
+ntuser.dat
+SAM
+SYSTEM
+SECURITY
+SOFTWARE
+DEFAULT
+UsrClass.dat
+pagefile.sys
+hiberfil.sys
+swapfile.sys
+thumbs.db
+Thumbs.db
+desktop.ini
+Desktop.ini
+.lnk
+prefetch
+Prefetch
+amcache
+Amcache.hve
+shimcache
+AppCompatCache
+EventLog
+evtx
+winevt
+$MFT
+$LogFile
+$Bitmap
+$Recycle.Bin
+RECYCLER
+System Volume Information
+$RECYCLE.BIN
+Windows\System32
+Windows\SysWOW64
+winlogon
+lsass.exe
+csrss.exe
+svchost.exe
+wininit.exe
+services.exe
+smss.exe
+taskhost.exe
+explorer.exe
+cmd.exe
+powershell.exe
+wscript.exe
+mshta.exe
+regsvr32.exe
+rundll32.exe
+certutil.exe
+msiexec.exe
+bitsadmin.exe
+wmic.exe
+net.exe
+netstat
+ipconfig
+whoami
+systeminfo
+tasklist
+reg query
+reg add
+net user
+net localgroup
+net share
+cacls
+icacls
+
+# Windows credential stores
+lsass
+Credential Manager
+Windows Credential
+CredentialBlob
+genericr:
+termsrv
+TERMSRV
+LegacyGeneric
+DomainPassword
+DomainCertificate
+
+# Windows event IDs (as strings for log analysis)
+EventID
+Event ID
+4624
+4625
+4648
+4662
+4672
+4698
+4699
+4700
+4720
+4722
+4723
+4724
+4725
+4726
+4728
+4732
+4738
+4740
+4756
+4768
+4769
+4771
+4776
+7045
+
+
+# ══════════════════════════════════════
+# EMAIL ARTIFACTS
+# ══════════════════════════════════════
+
+From:
+To:
+Cc:
+Bcc:
+Subject:
+Reply-To:
+Return-Path:
+Received: from
+Message-ID:
+MIME-Version:
+Content-Type: multipart
+Content-Transfer-Encoding:
+X-Mailer:
+X-Originating-IP:
+X-Spam-Status:
+X-Spam-Score:
+Delivered-To:
+Date:
+phishing
+Phishing
+PHISHING
+spear phishing
+whaling
+vishing
+smishing
+mail bomb
+
+
+# ══════════════════════════════════════
+# CLOUD & DEVOPS SECRETS
+# ══════════════════════════════════════
+
+# AWS
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_SESSION_TOKEN
+AWS_DEFAULT_REGION
+aws_access_key_id
+aws_secret_access_key
+AKIA
+ASIA
+AROA
+aws_region
+.aws/credentials
+.aws/config
+aws_profile
+s3://
+arn:aws:
+
+# Google Cloud
+GOOGLE_API_KEY
+GOOGLE_APPLICATION_CREDENTIALS
+google_cloud
+GCP_PROJECT
+gcloud
+service_account
+firebase_api_key
+FIREBASE_TOKEN
+AIza
+
+# Azure
+AZURE_SUBSCRIPTION_ID
+AZURE_TENANT_ID
+AZURE_CLIENT_ID
+AZURE_CLIENT_SECRET
+AZURE_STORAGE_KEY
+azure_connection_string
+DefaultEndpointsProtocol=https
+AccountName=
+AccountKey=
+
+# GitHub / GitLab
+GITHUB_TOKEN
+GH_TOKEN
+github_pat_
+ghp_
+ghs_
+ghr_
+GITLAB_TOKEN
+GL_TOKEN
+CI_JOB_TOKEN
+DEPLOY_KEY
+NPM_TOKEN
+NPM_AUTH_TOKEN
+
+# Docker / Kubernetes
+DOCKER_PASSWORD
+DOCKER_AUTH
+REGISTRY_PASSWORD
+KUBECONFIG
+KUBE_TOKEN
+k8s_secret
+kubernetes.io/dockerconfigjson
+.dockerconfigjson
+dockercfg
+docker-credential
+imagePullSecret
+
+# CI/CD platforms
+TRAVIS_CI
+CIRCLE_CI
+JENKINS_SECRET
+JENKINS_TOKEN
+BITBUCKET_PASSWORD
+SONAR_TOKEN
+CODECOV_TOKEN
+HEROKU_API_KEY
+NETLIFY_AUTH_TOKEN
+VERCEL_TOKEN
+
+# Generic env patterns
+.env
+.env.local
+.env.production
+.env.development
+.env.staging
+config.yml
+config.yaml
+secrets.yml
+secrets.yaml
+credentials.json
+service-account.json
+private.pem
+private.key
+id_rsa.pub
+.npmrc
+.pypirc
+.pip
+pip.conf
+composer.auth.json
+
+
+# ══════════════════════════════════════
+# DATABASE ARTIFACTS
+# ══════════════════════════════════════
+
+# SQL keywords (data leaks in images)
+SELECT *
+SELECT password
+SELECT passwd
+INSERT INTO users
+INSERT INTO accounts
+UPDATE users SET
+UPDATE password
+ALTER USER
+GRANT ALL
+mysql_connect
+mysqli_connect
+PDO
+pg_connect
+sqlite3_open
+MongoClient
+redis_connect
+connection_string
+ConnectionString
+Data Source=
+Initial Catalog=
+User ID=
+Password=
+Server=
+Database=
+Integrated Security=
+
+# Database files
+.sql
+.sqlite
+.sqlite3
+.db
+.mdb
+.accdb
+mysqldump
+pg_dump
+mongodump
+
+# Database users
+root@localhost
+postgres
+mysql
+oracle
+sa (SQL Server)
+dba
+
+
+# ══════════════════════════════════════
+# WEB APPLICATION ARTIFACTS
+# ══════════════════════════════════════
+
+# Web vulnerabilities
+eval(
+document.cookie
+document.write
+innerHTML
+outerHTML
+localStorage
+sessionStorage
+window.location
+XMLHttpRequest
+fetch(
+axios
+jQuery.ajax
+XSS
+CSRF
+SQLi
+LFI
+RFI
+SSRF
+XXE
+IDOR
+RCE
+
+# PHP artifacts
+<?php
+<?=
+$_GET[
+$_POST[
+$_REQUEST[
+$_SESSION[
+$_COOKIE[
+$_FILES[
+$_SERVER[
+shell_exec(
+exec(
+system(
+passthru(
+preg_replace
+create_function
+call_user_func
+file_get_contents
+include(
+require(
+include_once
+require_once
+ob_start
+ob_flush
+phpinfo()
+
+# CMS / frameworks
+wp-config.php
+wp-login.php
+wp-admin
+wordpress
+joomla
+drupal
+settings.php
+config.php
+database.php
+db.php
+conn.php
+connect.php
+connection.php
+.htaccess
+.htpasswd
+web.config
+app.config
+appsettings.json
+web.xml
+spring.datasource
+
+
+# ══════════════════════════════════════
+# ENCODING & CRYPTOGRAPHY
+# ══════════════════════════════════════
+
+# Base encodings (common prefixes)
+eyJ
+TVqQ
+UEsDB
+AAAA
+BBBB
+
+# Cipher names
+AES
+RSA
+DES
+3DES
+TripleDES
+Blowfish
+Twofish
+ChaCha20
+RC4
+ROT13
+Vigenere
+Caesar
+XOR
+PKCS
+
+# Hashing
+MD5
+SHA1
+SHA-1
+SHA256
+SHA-256
+SHA512
+SHA-512
+bcrypt
+scrypt
+Argon2
+PBKDF2
+HMAC
+CRC32
+
+# Key derivation / exchange
+Diffie-Hellman
+ECDH
+ECDSA
+ElGamal
+OAEP
+PSS
+
+# Common encoded strings / flags in CTF
+SGVsbG8=
+dGVzdA==
+YWRtaW4=
+cGFzc3dvcmQ=
+
+
+# ══════════════════════════════════════
+# STEGANOGRAPHY ARTIFACTS
+# ══════════════════════════════════════
+
+steghide
+stegano
+steganography
+Steganography
+steganographic
+outguess
+OpenStego
+SilentEye
+ImageMagick
+stegsolve
+binwalk
+foremost
+stegdetect
+zsteg
+stegpy
+hidden
+Hidden
+HIDDEN
+invisible
+Invisible
+conceal
+concealed
+watermark
+LSB
+least significant
+embedded
+embed
+covert channel
+secret message
+hidden message
+covert data
+exiftool
+exif
+EXIF
+IPTC
+XMP
+tEXt
+zTXt
+metadata
+Metadata
+METADATA
+stealth
+Stealth
+camouflage
+cover object
+carrier file
+
+
+# ══════════════════════════════════════
+# FORENSIC TOOL ARTIFACTS
+# ══════════════════════════════════════
+
+Autopsy
+Volatility
+volatility3
+strings
+binwalk
+foremost
+scalpel
+photorec
+testdisk
+dd if=
+dd of=
+hexdump
+xxd
+objdump
+readelf
+ltrace
+strace
+lsof
+tcpdump
+wireshark
+tshark
+nmap
+masscan
+netstat -an
+ss -an
+ps aux
+/proc/
+/sys/
+dmesg
+journalctl
+ausearch
+aureport
+last
+lastlog
+wtmp
+btmp
+utmp
+
+
+# ══════════════════════════════════════
+# PROCESS / EXECUTION ARTIFACTS
+# ══════════════════════════════════════
+
+/bin/sh
+/bin/bash
+/usr/bin/python
+/usr/bin/perl
+/usr/bin/ruby
+/usr/bin/php
+CreateProcess
+CreateThread
+NtCreateProcess
+fork()
+execve(
+execl(
+popen(
+subprocess.call
+subprocess.Popen
+os.system(
+os.popen(
+Runtime.exec
+ProcessBuilder
+child_process
+spawn(
+spawnSync
+execSync
+eval(require(
+require('child_process')
+import os
+import subprocess
+import socket
+import base64
+
+
+# ══════════════════════════════════════
+# INTERESTING FILE PATHS / NAMES
+# ══════════════════════════════════════
+
+/flag
+/flag.txt
+flag.txt
+secret.txt
+password.txt
+passwords.txt
+creds.txt
+credentials.txt
+keys.txt
+tokens.txt
+backup
+backup.zip
+backup.tar
+data.zip
+dump.sql
+database.sql
+shadow.bak
+passwd.bak
+.git/config
+.git/HEAD
+.svn/entries
+.hg/hgrc
+.DS_Store
+Thumbs.db
+desktop.ini
+TODO.txt
+NOTES.txt
+notes.txt
+readme.txt
+README.txt
+log.txt
+error.log
+access.log
+debug.log
+audit.log
+history.log
+trace.log
+session.log
+
+
+# ══════════════════════════════════════
+# SOCIAL ENGINEERING / PHISHING
+# ══════════════════════════════════════
+
+click here
+Click Here
+CLICK HERE
+verify your account
+Verify Your Account
+update your information
+confirm your identity
+your account has been
+suspended
+compromised
+urgent action required
+Urgent Action Required
+limited time
+expires soon
+act now
+Act Now
+you have won
+You Have Won
+prize
+Prize
+lottery
+Lottery
+inheritance
+wire transfer request
+CEO fraud
+BEC (Business Email Compromise)
+gift card
+gift cards
+iTunes card
+Google Play card
+send me
+login to your account
+reset your password
+verify your email
+unusual activity
+suspicious login
+security alert
+
+
+# ══════════════════════════════════════
+# NETWORK FORENSICS
+# ══════════════════════════════════════
+
+# DNS exfiltration patterns
+.tunnel.
+.dns.
+.exfil.
+.c2.
+.data.
+
+# Common C2 domains (generic patterns)
+.dyn.
+ddns.net
+no-ip.com
+ngrok.io
+burpcollaborator.net
+interactsh.com
+canarytokens.com
+requestbin.
+
+# VPN / Proxy
+OpenVPN
+WireGuard
+IPSec
+L2TP
+PPTP
+SOCKS5
+SOCKS4
+ProxyChains
+Tor
+Onion
+I2P
+Freenet
+VPN
+VPN_USERNAME
+VPN_PASSWORD
+vpn_secret
+
+# Packet / traffic markers
+PACKET
+Frame
+Ethernet II
+802.3
+ARP who-has
+ICMP echo
+TCP SYN
+UDP
+DNS query
+HTTP GET
+HTTP POST
+HTTP/1.1
+HTTP/2
+
+
+# ══════════════════════════════════════
+# DOCKER / CONTAINER ARTIFACTS
+# ══════════════════════════════════════
+
+FROM ubuntu
+FROM alpine
+FROM debian
+FROM python
+RUN apt-get
+RUN apk add
+ENV PASSWORD
+ENV SECRET
+ENV API_KEY
+ENV DATABASE_URL
+COPY . .
+COPY --chown
+docker-compose.yml
+docker-compose.yaml
+Dockerfile
+.dockerignore
+ENTRYPOINT
+CMD ["/bin/sh"]
+CMD ["/bin/bash"]
+/var/run/docker.sock
+containerd
+kubectl
+helm
+kustomize
+
+
+# ══════════════════════════════════════
+# MISC INTERESTING STRINGS
+# ══════════════════════════════════════
+
+TODO
+FIXME
+HACK
+XXX
+BUG
+NOTE
+TEMP
+TEMPORARY
+HARDCODED
+hardcoded
+hard-coded
+DO NOT COMMIT
+do not commit
+sensitive
+SENSITIVE
+confidential
+CONFIDENTIAL
+classified
+CLASSIFIED
+private
+PRIVATE
+internal use only
+for your eyes only
+top secret
+TOP SECRET
+eyes only
+not for distribution
+proprietary
+PROPRIETARY
+delete this
+remove before
+debug only
+DEBUG
+test only
+TEST ONLY
+development only
+dev only
+staging only
+disable in prod
+remove before release
+temp password
+temporary password
+default password
+initial password
+setup password
+installation password
+one-time password
+OTP
+2FA
+MFA
+two-factor
+multi-factor
+authenticator
+TOTP
+HOTP
+backup code
+recovery code
+emergency code

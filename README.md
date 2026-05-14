@@ -80,7 +80,7 @@ gcc -Wall -Wextra -pedantic -std=c11 -g -o memscan memscan.c
 ```
 [*] Context length: 16 bytes
 [*] Case-insensitive: no
-[*] Loaded 24 keyword(s) from 'wordlist.txt'
+[*] Loaded 1432 keyword(s) from 'wordlist.txt'
 
 Keywords loaded:
   - encrypted
@@ -173,7 +173,11 @@ Expected final line:
 All heap blocks were freed -- no leaks are possible
 ```
 
-### Wordlist format
+---
+
+## Wordlist
+
+`wordlist.txt` is a plain-text file — one keyword per line. Lines starting with `#` and blank lines are ignored.
 
 ```
 # Lines starting with '#' are comments — ignored
@@ -182,147 +186,211 @@ All heap blocks were freed -- no leaks are possible
 password
 admin
 @gmail.com
-BEGIN RSA PRIVATE KEY
+-----BEGIN RSA PRIVATE KEY-----
 ```
 
----
+The bundled `wordlist.txt` contains **1 432 keywords** across 18 forensic categories:
 
-## Exercise Q&A
+### CTF flag formats
 
-### Part 1 — File I/O
+Common bracket-style flag prefixes used across CTF platforms.
 
-#### Exercise 1.2 — Questions on chunk reading
+| Examples |
+|----------|
+| `flag{` `FLAG{` `CTF{` `ESGI{` `HTB{` `THM{` `picoCTF{` `utflag{` `sekai{` `corctf{` |
 
-**a. Why is the buffer declared as `unsigned char *` rather than `char *`?**
+### Authentication & credentials
 
-Car nous ne voulons pas des valeurs négatives, mettre unsigned nous assure que les bytes seront interprétés avec leur valeur positive. 
+Credential field names, token types, API key patterns, common weak passwords, and hash prefixes found in memory or config files.
 
-**b. What does `fread` return when it reaches the end of the file?**
+| Sub-category | Examples |
+|---|---|
+| Field names | `password` `passwd` `secret` `token` `apikey` `credentials` |
+| Token types | `JWT` `bearer_token` `access_token` `refresh_token` `oauth_token` |
+| API keys | `AWS_SECRET_ACCESS_KEY` `GOOGLE_API_KEY` `client_secret` `signing_key` |
+| Weak passwords | `hunter2` `P@ssw0rd` `admin123` `letmein` `qwerty` `123456` |
+| Hash prefixes | `$2b$` `$6$` `SHA256:` `MD5:` `PBKDF2` |
 
-`fread` retourne 0 quand il atteind la fin du fichier
+### File magic bytes / headers
 
-**c. What would happen if you used `fopen(path, "r")` instead of `"rb"` on Windows?**
+Binary file signatures and PEM block delimiters that appear as literal strings in raw images.
 
-Sur windows, le mode "r" tranforme `\r\n` en `\n`. Ce qui va donc corrompre les offsets et renvoyer les mauvais indices.
+| Format | Signature |
+|---|---|
+| JPEG | `JFIF` `Exif` |
+| PNG | `PNG` |
+| PDF | `%PDF` |
+| ZIP / JAR | `PK` |
+| PE executable | `MZ` |
+| ELF binary | `ELF` |
+| RAR | `Rar!` |
+| 7-Zip | `7z` |
+| RSA private key | `-----BEGIN RSA PRIVATE KEY-----` |
+| OpenSSH key | `-----BEGIN OPENSSH PRIVATE KEY-----` |
+| PGP message | `-----BEGIN PGP MESSAGE-----` |
+| SQLite | `SQLite format 3` |
 
----
+### SSH & remote access
 
-### Part 2 — Linked Lists
+SSH key types, config keywords, and remote-access tool names.
 
-#### Exercise 2.1 — Head insertion: list state diagram
+| Examples |
+|----------|
+| `ssh-rsa` `ssh-ed25519` `ecdsa-sha2-nistp256` `id_rsa` `authorized_keys` `known_hosts` |
+| `putty` `WinSCP` `TeamViewer` `AnyDesk` `RDP` `VNC` |
 
-List before inserting `"secret"`:
+### Network artifacts
 
-```
-head
- |
- v
-[ "passwd" | next ]──►[ "admin" | NULL ]
-```
+URL schemes, HTTP headers, private IP ranges, common port patterns, session cookie names, and dark-web domains.
 
-List after inserting `"secret"` at the head:
+| Sub-category | Examples |
+|---|---|
+| URL schemes | `http://` `https://` `ftp://` `sftp://` `ssh://` `smb://` `.onion` |
+| HTTP headers | `Authorization:` `Cookie:` `Set-Cookie:` `X-API-Key:` `X-Forwarded-For:` |
+| Private IPs | `192.168.` `10.0.` `172.16.` `127.0.0.1` |
+| Session cookies | `PHPSESSID` `JSESSIONID` `ASP.NET_SessionId` `remember_me` |
 
-```
-head
- |
- v
-[ "secret" | next ]──►[ "passwd" | next ]──►[ "admin" | NULL ]
-```
+### Personally identifiable information (PII)
 
-**Why is head insertion O(1) and tail insertion O(N)?**
+Email domains, payment card fields, banking identifiers, and identity document keywords.
 
-Head insertion require l'usage de 2 pointers (le nouveau node's `next` and l'update `head`). Tail insertion au contraire, va parcourir tout le node jusqu'au dernier pour ajouter le nouveau a la fin.
+| Sub-category | Examples |
+|---|---|
+| Email domains | `@gmail.com` `@protonmail.com` `@outlook.com` `@tutanota.com` |
+| Payment cards | `credit_card` `CVV` `CVC` `card_number` `expiry` `billing_address` |
+| Banking | `IBAN` `SWIFT` `BIC` `bank_account` `routing_number` `stripe_secret` |
+| Identity | `SSN` `passport` `drivers_license` `date_of_birth` `national_id` |
 
-**When to prefer one over the other?**
+### Cryptocurrency
 
-- Si on s'en moque de l'ordre et qu'on veut quelque chose de plus rapide, on va préferer la **head insertion** .
-- On preferera la **tail insertion** quand on veut préserver l'ordre.
+Coin names and tickers, wallet files, seed phrase keywords, HD key prefixes, and exchange names.
 
-#### Exercise 2.3 — Pitfall: why you cannot `free(head); head = head->next;`
+| Sub-category | Examples |
+|---|---|
+| Coins | `bitcoin` `BTC` `ethereum` `ETH` `monero` `XMR` `litecoin` `dogecoin` |
+| Wallet files | `wallet.dat` `wallet.json` `keystore` |
+| Key material | `mnemonic` `seed_phrase` `xprv` `xpub` `private_key_hex` |
+| Exchanges | `coinbase` `binance.com` `blockchain.info` `metamask` `electrum` |
 
-SI on`free(head)`, la mémoire au niveau de`head` est libérée. Du coup, on ne va plus pouvoir accéder au suivant (`head->next`) car on a perdu l'acces a la zone mémoire
+### Malware & threat artifacts
 
-```c
-KeywordNode *temp = current;
-current = current->next;   // advance first
-free(temp);                // then free the saved pointer
-```
+Ransomware note strings, malware type names, C2 framework indicators, and code injection patterns.
 
-#### Exercise 2.5 — Why each MatchNode owns its own copy of context bytes
+| Sub-category | Examples |
+|---|---|
+| Ransomware | `ransom` `YOUR FILES` `pay now` `HOW_TO_DECRYPT` `README_DECRYPT` `RECOVERY_KEY` |
+| Malware types | `backdoor` `trojan` `rootkit` `keylogger` `cryptominer` `RAT` |
+| C2 frameworks | `cobalt_strike` `meterpreter` `metasploit` `empire` `covenant` |
+| Injection API | `CreateRemoteThread` `VirtualAllocEx` `WriteProcessMemory` `NtUnmapViewOfSection` |
+| LOLBins | `certutil -decode` `mshta` `regsvr32` `bitsadmin` `wmic process call create` |
+| Obfuscation | `base64_decode(` `gzinflate(` `eval(` `xor_key` `obfuscated` |
 
-`scan_image` lis les images sur 1MB de chunk. Et on relis les nouveaux chunks a chaque itération. Ainsi, si on ne stocke pas une copie, dès qu'on va re-call fread, on va écraser les valeurs stockés.
+### Linux / Unix system artifacts
 
----
+Sensitive file paths, shell history files, suspicious one-liner patterns.
 
-### Part 3 — Pointers and Memory Management
+| Sub-category | Examples |
+|---|---|
+| Credential files | `/etc/passwd` `/etc/shadow` `/etc/sudoers` |
+| History files | `.bash_history` `.zsh_history` `.mysql_history` `.viminfo` |
+| SSH material | `.ssh/` `authorized_keys` `id_rsa` `id_ed25519` |
+| Suspicious commands | `chmod +x` `base64 -d` `wget http` `curl http` `nc -lvp` `iptables -F` |
 
-#### Exercise 3.2 — Byte scanner questions
+### Windows system artifacts
 
-**a. What does `end - ptr` compute?**
+Registry hives, NTFS metadata files, prefetch, event IDs, and LOLBins.
 
-`end` et lié a `buf + bytes_read` représente l'adrsse du dernier byte. `end - ptr` donne le numbre de bytes restants dans le buffer qui reste, en partant du ptr. 
+| Sub-category | Examples |
+|---|---|
+| Registry hives | `NTUSER.DAT` `SAM` `SYSTEM` `SECURITY` `SOFTWARE` |
+| NTFS artifacts | `$MFT` `$LogFile` `$Bitmap` `$Recycle.Bin` |
+| Execution traces | `prefetch` `amcache` `shimcache` `AppCompatCache` |
+| Event IDs | `4624` `4625` `4648` `4672` `4720` `4740` `4776` |
+| LOLBins | `powershell -enc` `certutil.exe` `mshta.exe` `rundll32.exe` `wscript.exe` |
 
-**b. Which function compares raw bytes without assuming a null terminator?**
+### Email artifacts
 
-`memcmp(const void *a, const void *b, size_t n)` compare `n` bytes en partant de `a` et `b`. Il return `0` si tous les`n` bytes sont identiques.
+SMTP/MIME header names and phishing indicator strings.
 
-**c. Why does `file_pos + (ptr - buf)` give the correct absolute offset?**
+| Examples |
+|----------|
+| `From:` `To:` `Subject:` `Reply-To:` `Received: from` `MIME-Version:` `X-Originating-IP:` |
+| `phishing` `spear phishing` `whaling` `vishing` `smishing` `mail bomb` |
 
-`file_pos` est mis a jour après chaque `fread`. `ptr - buf` c'est l'offset du byte actuel dans le chunk.
+### Cloud & DevOps secrets
 
-#### Exercise 3.3 — Context byte capture questions
+Provider-specific key prefixes, CI/CD tokens, container secrets, and config file names.
 
-**a. Why allocate `ctx_len + 1` bytes instead of `ctx_len`?**
+| Provider | Examples |
+|---|---|
+| AWS | `AWS_ACCESS_KEY_ID` `AWS_SECRET_ACCESS_KEY` `AKIA` `arn:aws:` `.aws/credentials` |
+| GCP | `GOOGLE_API_KEY` `GOOGLE_APPLICATION_CREDENTIALS` `AIza` `service_account` |
+| Azure | `AZURE_CLIENT_SECRET` `AZURE_STORAGE_KEY` `DefaultEndpointsProtocol=https` |
+| GitHub / GitLab | `GITHUB_TOKEN` `ghp_` `github_pat_` `GITLAB_TOKEN` `CI_JOB_TOKEN` |
+| Docker / K8s | `DOCKER_PASSWORD` `KUBECONFIG` `kubernetes.io/dockerconfigjson` `imagePullSecret` |
+| Config files | `.env` `.env.production` `secrets.yaml` `credentials.json` `service-account.json` |
 
-C'est pour s'assurer qu'on termine par un byte NULL, pour pouvoir le passer de maniere sécurisée à toute fonction qui attend une string.
+### Database artifacts
 
-**b. What does `ptr - before_len` point to? Diagram for `ctx_len = 4`, match `"pass"` at position 10:**
+SQL DML/DDL keywords, connection string patterns, and database file extensions.
 
-```
-index:  0    1    2    3    4    5    6    7    8    9   10   11   12   13
-buf:  [ ..   ..   ..   ..   ..   ..   p    r    e    f   'p' 'a' 's' 's' ]
-                                                          ^
-                                                         ptr (position 10)
+| Sub-category | Examples |
+|---|---|
+| SQL keywords | `SELECT password` `INSERT INTO users` `UPDATE users SET` `GRANT ALL` |
+| Connection strings | `Data Source=` `User ID=` `Password=` `ConnectionString` |
+| DB files | `.sql` `.sqlite3` `.db` `.mdb` `mysqldump` `pg_dump` |
 
-before_len = min(ctx_len=4, ptr-buf=10) = 4
-ptr - before_len = &buf[6]  →  captures bytes [6..9] = "pref"
-```
+### Web application artifacts
 
-**c. What could go wrong without the `left >= ctx_len` check?**
+PHP dangerous sinks, CMS config files, client-side attack patterns, and vulnerability abbreviations.
 
-Si le `ptr` est proche du début du buffer et que`ctx_len` est égal à 16, alors`ptr - ctx_len` va référencer un pointer avant le buffer. Ca créé donc un buffer underflow.
+| Sub-category | Examples |
+|---|---|
+| PHP sinks | `shell_exec(` `exec(` `system(` `eval(` `base64_decode(` `$_GET[` `$_POST[` |
+| CMS configs | `wp-config.php` `wp-admin` `settings.php` `.htaccess` `.htpasswd` |
+| Client-side | `document.cookie` `innerHTML` `localStorage` `XMLHttpRequest` |
+| Vuln names | `XSS` `SQLi` `LFI` `RFI` `SSRF` `XXE` `IDOR` `RCE` `CSRF` |
 
-#### Exercise 3.4 — Pointer vs. array notation equivalences
+### Encoding & cryptography
 
-| Pointer notation | Array notation |
-|-----------------|----------------|
-| `*(buf + i)`    | `buf[i]`       |
-| `*(ptr - 3)`    | `ptr[-3]`      |
-| `*(end - 1)`    | `end[-1]`      |
-| `ptr[0]`        | `*ptr`         |
+Cipher and hash algorithm names, key-derivation schemes, and common base64 header patterns.
 
-Si `ptr` est de type`unsigned char *`, alors`ptr + 1` est aussi de type`unsigned char *`.
+| Sub-category | Examples |
+|---|---|
+| Ciphers | `AES` `RSA` `DES` `ChaCha20` `Blowfish` `RC4` `ROT13` `XOR` |
+| Hashes | `MD5` `SHA256` `SHA512` `bcrypt` `scrypt` `Argon2` `HMAC` `CRC32` |
+| Key exchange | `Diffie-Hellman` `ECDH` `ECDSA` `PKCS` `OAEP` |
+| Base64 prefixes | `eyJ` (JWT) `TVqQ` (PE/MZ) `UEsDB` (ZIP) |
 
-#### Exercise 3.5 — Memory management audit
+### Steganography artifacts
 
-| Allocation          | Allocated in   | Freed by        |
-|---------------------|----------------|-----------------|
-| Read buffer (`buf`) | `scan_image()` | `scan_image()`  |
-| Each `KeywordNode`  | `keyword_push()` | `keyword_free()` |
-| Each `MatchNode`    | `match_push()` | `match_free()`  |
-| `node->context_before` | `match_push()` | `match_free()` |
-| `node->context_after`  | `match_push()` | `match_free()` |
+Tool names, technique keywords, and metadata field names.
 
-**a. What is a memory leak?**
+| Sub-category | Examples |
+|---|---|
+| Tools | `steghide` `outguess` `stegsolve` `zsteg` `binwalk` `stegdetect` `SilentEye` |
+| Techniques | `LSB` `watermark` `covert channel` `least significant` `hidden message` |
+| Metadata | `EXIF` `IPTC` `XMP` `tEXt` `zTXt` `exiftool` `Metadata` |
 
-A memory leak c'est quand nous allouons un `malloc` pour une nouvelle adresse mémoire et que nous n'utilisons jamais la fonction `free` pour libérer la mémoire. Le programme perd alors le pointer vers l'emplacement de la mémoire.
+### Social engineering
 
-**b. What is a use-after-free error?**
-C'est quand on essaye d'accéder a un emplacement mémoire qui à déjà été free. L'adresse ne nous appartient donc plus.
+Urgency language, impersonation phrases, and lure keywords common in phishing and BEC attacks.
 
-**c. What is a buffer overflow? Where could one occur in memscan?**
+| Examples |
+|----------|
+| `click here` `verify your account` `urgent action required` `your account has been` |
+| `CEO fraud` `BEC (Business Email Compromise)` `gift card` `wire transfer request` |
+| `you have won` `lottery` `inheritance` `suspicious login` `security alert` |
 
-Un buffer overflow se passe quand on essaye d'écrire apres la fin de l'emplacement mémoire alloué. Dans`memscan`, on obtient un buffer overflow si le check de `remaining < klen` était enlevé : `memcmp` aurait lu le `buf` dans la partie non allouée de la mémoire.
+### Miscellaneous
+
+Developer breadcrumbs, sensitivity labels, and authentication bypass indicators.
+
+| Sub-category | Examples |
+|---|---|
+| Dev breadcrumbs | `TODO` `FIXME` `HACK` `HARDCODED` `DO NOT COMMIT` `debug only` `temp password` |
+| Sensitivity labels | `CONFIDENTIAL` `CLASSIFIED` `TOP SECRET` `PRIVATE` `PROPRIETARY` |
+| MFA / OTP | `OTP` `2FA` `MFA` `TOTP` `HOTP` `authenticator` `backup code` `recovery code` |
 
 ---
 
@@ -331,7 +399,7 @@ Un buffer overflow se passe quand on essaye d'écrire apres la fin de l'emplacem
 ```
 .
 ├── memscan.c            # Main source file
-├── wordlist.txt         # Default keyword list (24 keywords)
+├── wordlist.txt         # Forensic keyword dictionary (1 432 keywords, 18 categories)
 ├── make_test_image.py   # Generates usb.img with embedded fragments
 ├── Makefile             # Build and test shortcuts
 └── README.md            # This file
